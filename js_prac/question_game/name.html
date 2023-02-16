@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> : </h1>
+  <h2 class="result"></h2>
+  <p class="result"></p>
+  <script>
+    var message;
+    var text;
+    var result;
+
+    if (window.confirm('dnjs')) {
+      message='false';
+      text='mm'
+    } else if (window.confirm('dus')) {
+      message='false';
+      text='mm'
+    } else if (window.confirm('dbs')) {
+      message='true!';
+      text='oh'
+    } else {
+      message='false';true
+      text='mm'
+    }
+
+    document.getElementsByClassName('result')[0].textContent=message;
+    document.getElementsByClassName('result')[1].textContent=text;
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트 연습</title>
+</head>
+<body>
+  <main>
+    <p id="select">여기에 일시를 표시</p>
+    <p class="sample">
+      <script>
+        document.write(new Date());
+      </script>
+    </p>
+    <!-- <p id="text_test"></p> -->
+  </main>
+  <footer>
+    <p>JavaScript sample</p>
+  </footer>
+  <script>
+    //id="select"에 대한 연습
+    //console.log(document.getElementById('select'))
+    document.getElementById('select').textContent = new Date();
+    // document.getElementById('select').textContent = '여기입니다.';
+    // document.getElementById('select').textContent = 25*12;
+    // console.log(document.getElementById('select').textContent)
+    // document.getElementById('select').textContent
+  </script>
+</body>
+</html>
