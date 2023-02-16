@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    table td {
+      border: 1px solid black;
+      width: 100px;
+      padding-left: 0.2em;
+    }
+  </style>
+</head>
+<body>
+  <!--객체를 HTML에 출력하기-->
+  <!--
+    <table>
+    <tr>
+      <td class="data_1"></td>
+      <td class="data_2"></td>
+      <td class="data_3"></td>
+    </tr>
+  </table>
+-->
+
+  <!-- 입력 내용 가져오기 -->
+  <form action="#" id="form">
+    <input type="submit" value="검색">
+  </form>
+  <script>
+    //----------객체 생성하기
+    /*
+    var book={title:'head', price:50000, value:3};
+    */
+
+    //----------객체 전체 읽기
+    // console.log(book);
+
+    //----------객체 일부분 읽기
+    /*
+    console.log(book.price);
+    console.log(book.title);
+    */
+
+    //----------객체를 읽는 다른 한 가지 방법
+    /*
+    console.log(book['title']);
+    console.log(book['value']);
+    */
+
+
+    //----------객체의 프로퍼티 데이터를 변경하는 방법
+    /*
+    book.price= 2000;
+    console.log(book.price);
+    */
+
+    //----------객체의 프로퍼티 데이터를 변경하는 다른 한 가지 방법
+    /*
+    book['price']=5000;
+    console.log(book['price']);
+    */
+
+    //----------객체의 모든 프로퍼티 불러오기 with. (for...in)
+    /*
+    for (var p in book) {
+      console.log(p + '=' + book[p]);
+    }
+    */
+
+    //----------객체를 HTML에 출력하기
+    /*
+    document.getElementsByClassName('data_1')[0].textContent=book.title;
+    document.getElementsByClassName('data_2')[0].textContent=book.price+'원';
+    document.getElementsByClassName('data_3')[0].textContent=book.value+'권';
+    */
+
+
+    //----------폼의 입력 내용 가져오기
+    document.getElementById('form').onsubmit = function() {
+      console.log('click')
+    }
+  </script>
+</body>
+</html>
