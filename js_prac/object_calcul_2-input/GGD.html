@@ -7,18 +7,31 @@
   <title>Document</title>
 </head>
 <body>
-  <p>콘솔에서 값 확인</p>
   <script>
     var num=window.prompt('2>= num');
     var Xdan=2
     
     for (Xdan; Xdan<=num; Xdan++) {
+      //--- 단 수 wrapper 생성
+      var c_div=document.createElement('div');
+      c_div.classList.add(Xdan+'단_wrapper');
+      document.body.appendChild(c_div);
+      //--- 단 수 제목 표기
+      var c_h1=document.createElement('h1');
+      c_h1.textContent=Xdan+' 단';
+      document.getElementsByClassName(Xdan+'단_wrapper')[0].appendChild(c_h1);
+      //--- 단 수 값 결과 항목
+      var c_ul=document.createElement('ul');
+      c_ul.classList.add(Xdan+'단_result');
+      document.getElementsByClassName(Xdan+'단_wrapper')[0].appendChild(c_ul);
       for (i=1; i<=9; i++) {
-        console.log(Xdan*i);
-    }
+        //--- 결과 값 항목에 리스트업
+        var c_li=document.createElement('li')
+        c_li.textContent=Xdan+"*"+i+" = "+Xdan*i
+        document.getElementsByClassName(Xdan+'단_result')[0].appendChild(c_li);
+      }
     }
     /* num보다 x단의 숫자가 작을 때 2단~x단 까지 x*9를 표기하라 */
-
   </script>
 </body>
 </html>
