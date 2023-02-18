@@ -5,30 +5,47 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body {
+      display: flex;
+    }
+    #wrapper {
+      border: 1px solid black;
+      padding: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1> : </h1>
-  <h2 class="result"></h2>
-  <p class="result"></p>
+  <div id="wrapper">
+    <h1 class="look"></h1>
+    <h2 class="result"></h2>
+    <p class="result"></p>
+  </div>
   <script>
+    var look;
     var message;
     var text;
     var result;
 
-    if (window.confirm('dnjs')) {
+    if (window.confirm("이 학생의 이름은 '곽원효'이다.")) {
       message='false';
-      text='mm'
-    } else if (window.confirm('dus')) {
+      text='다시 한 번 생각해 주세요 ㅠㅠ..'
+      look=' XD '
+    } else if (window.confirm("이 학생의 이름은 '곽연호'이다.")) {
       message='false';
-      text='mm'
-    } else if (window.confirm('dbs')) {
+      text='다시 한 번 생각해 주세요 ㅠㅠ..'
+      look=' XD '
+    } else if (window.confirm("이 학생의 이름은 '곽윤호'이다.")) {
       message='true!';
-      text='oh'
+      text='감사합니다 선생님 정답입니다!'
+      look=' :D '
     } else {
       message='false';true
-      text='mm'
+      text='다시 한 번 생각해 주세요 ㅠㅠ..'
+      look=' XD '
     }
 
+    document.getElementsByClassName('look')[0].textContent=look;
     document.getElementsByClassName('result')[0].textContent=message;
     document.getElementsByClassName('result')[1].textContent=text;
   </script>
