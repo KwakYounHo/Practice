@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 폼의 클릭 이벤트 -->
+  <!--
+  <form action="#" id="form">
+    <input type="text" name="word">
+    <input type="submit" value="검색">
+  </form>
+  <p id="output"></p>
+  -->
+
+  <!-- 날짜 데이터 취득과 표기 형식 변경 -->
+  <div>
+    <p>마지막 로그인 : <span id="last_time"></span></p>
+  </div>
+  
+  <script>
+    //클릭 이벤트
+    /*
+    document.getElementById('form').onsubmit=function() {
+      var search= document.getElementById('form').word.value;
+      document.getElementById('output').textContent='( '+search+' ) 검색중 ...';
+      return false;
+    };
+    */
+
+    //날짜 데이터 취득과 표기 형식 변경
+    var now= new Date();
+    var year= now.getFullYear;
+    var month=now.getMonth;
+    var date= now.getDate;
+    var hour=now.getHours;
+    var min=now.getMinutes
+
+    var output= year+'년 '+ month+'월 '+ date+'일 '+ hour+'시 '+min+'분';
+
+    document.getElementById('last_time').textContent= output;
+
+  </script>
+</body>
+</html>
