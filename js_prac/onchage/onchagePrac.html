@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>onchange</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    //root 선택
+    let root = document.getElementById("root")
+
+    //form 태그 생성
+    let C_form = document.createElement("form");
+    C_form.id = "myDayForm";
+    root.appendChild(C_form);
+
+    //selecet 태그 생성
+    let C_select = document.createElement("select");
+    C_select.id = "selectTime";
+    document.getElementById("myDayForm").appendChild(C_select);
+
+    //왜 안들어갈까
+    document.getElementById("selectTime").onchange = "changeTime"
+    console.dir(document.getElementById("selectTime"))
+    //selectTime에 온체인지가
+    
+    //옵션 태그 생성
+    count = 1
+    for (i=0; i<3; i++) {
+      let p = document.createElement("option");
+      p.value = "test_"+count;
+      p.innerText = "test_"+count;
+      document.getElementById("selectTime").appendChild(p);
+      count++
+    }
+
+  </script>
+</body>
+</html>
