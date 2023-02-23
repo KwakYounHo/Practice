@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calculator</title>
+</head>
+<body>
+  <div id="root">
+  </div>
+  <script>
+    // 전역 변수 설정-----------------------------------------
+    let root = document.getElementById("root");
+    let num_value;
+    let num_lander = [];
+    let operator;
+    // ------------------------------------------------------
+    
+    // root에 wrap 3개 만들기
+    for (i=0; i<3; i++) {
+      let div = document.createElement("div");
+      root.appendChild(div);
+    }
+    
+    // wrap 3개에 ID 부여하기
+    for (i=0; i<root.children.length; i++) {
+      let div = root.children[i];
+      if (i === 0) {
+        div.id = "num";
+      } else if (i === 1) {
+        div.id = "numPad";
+      } else if (i === 2) {
+        div.id = "operator";
+      }
+    }
+
+    // num에 숫자 스크린 만들기
+    let C_p = document.createElement("p");
+    C_p.style.fontSize = "50px";
+    C_p.textContent = 0;
+    let num = document.getElementById("num");
+    num.appendChild(C_p);
+    
+
+    // numPad 버튼 만들기
+    for (i=0; i<10; i++) {
+      let C_input = document.createElement("input");
+      C_input.type = "button";
+      C_input.value = i;
+      C_input.style.width = "50px"
+      C_input.style.height = "35px"
+      let numPad = document.getElementById("numPad");
+      numPad.appendChild(C_input);
+    }
+    
+    // numPad에 이벤트 만들기
+    for (i=0; i<document.querySelector("#numPad").children.length; i++) {
+      let numPad = document.getElementById("numPad");
+      numPad.children[i].addEventListener("click", numPadClick);
+    }
+    // numPad 이벤트
+    function numPadClick() {
+      num_value = this.value;
+      num_lander.push(num_value);
+      for (i=0; i<num_lander.length; i++)
+      num.children[0].innerHTML = num_lander;
+    }
+    
+    // 연산기호 만들기
+    for (i=0; i<7; i++) {
+      let input = document.createElement("input");
+      input.type = "button"
+      input.style.width = "50px";
+      input.style.height = "35px";
+      input.addEventListener("click", operatorClick)
+      let operator = document.getElementById("operator");
+      operator.appendChild(input);
+      if (i === 0) {
+        input.value = "C";
+      } else if (i === 1) {
+        input.value = "/";
+      } else if (i === 2) {
+        input.value = "*";
+      } else if (i === 3) {
+        input.value = "+";
+      } else if (i === 4) {
+        input.value = "-";
+      } else if (i === 5) {
+        input.value = "=";
+      } else {
+        input.value = "←";
+      }
+    }
+    // 연산기호 이벤트
+    function operatorClick() {
+      operator = this.value;
+      if (operator === "C") {
+        for (i=0; i<num_lander.length;) {
+          num_lander.pop();
+          num.children[0].innerHTML = num_lander;
+        }
+      } else {};
+      if (num.children[0].innerHTML === "") {
+        num.children[0].innerHTML = 0;
+      }
+    }
+
+
+    //test-------------------------
+    /*
+    let Fake = [];
+
+    // 숫자 클릭
+    function test_click (e) {
+      for (i=0; i<e; i++) {
+        Fake.push(i);
+      }
+      console.log(Fake.length);
+      for (i=0; i<Fake.length;) {
+        Fake.pop();
+      }
+    }
+
+    test_click(8);
+    test_click(3);
+    test_click(2);
+    test_click(5);
+    test_click(9);
+    test_click(5);
+    test_click(2);
+    */
+    // -----------------------------
+
+
+  </script>
+</body>
+</html>
