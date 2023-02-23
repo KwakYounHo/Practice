@@ -11,24 +11,67 @@
 <body>
   <div id="root">
     <form action="#">
-      <label for="sel_num">기준 숫자 : </label>
-      <select name="number" id="sel_num">
-        <option selected disabled>숫자선택</option>
+      <label for="sel_num_1">X : </label>
+      <select name="number" id="sel_num_1">
+        <option selected disabled>숫자 선택</option>
       </select>
-      <p>X</p>
+      <p>*</p>
+      <label for="sel_num_2">Y : </label>
+      <select name="number_2" id="sel_num_2">
+        <option selected disabled>숫자 선택</option>
+      </select>
+      <input type="button" value="계산">
     </form>
+    <div id="result"></div>
   </div>
   <script>
-    const myNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    //전역변수 설정
+    const sel_num_1 = document.querySelector("#sel_num_1");
+    const sel_num_2 = document.querySelector("#sel_num_2");
+    let myNum = [];
+    let selX;
+    let selY;
+
+    //muNum배열에 숫자 10까지 입력
+    for(i=0; i<10; i++) {
+      myNum.push(i+1);
+    }
+
+    //X의 선택 부분에 선택지 10까지 설정
     for (i=0; i<myNum.length; i++) {
-      let root = document.getElementById("sel_num");
+      let root = document.getElementById("sel_num_1");
       let option = document.createElement("option");
       option.value = myNum[i];
       option.innerText = myNum[i];
       root.appendChild(option)
     };
+    //Y의 선택 부분에 선택지 10까지 설정
+    for (i=0; i<myNum.length; i++) {
+      let root = document.getElementById("sel_num_2");
+      let option = document.createElement("option");
+      option.value = myNum[i];
+      option.innerText = myNum[i];
+      root.appendChild(option)
+    };
+    
+    //X,Y select가 변경 될 때 이벤트 발생
+    sel_num_1.addEventListener("change", change_sel_num_1)
+    function change_sel_num_1 () {
+      selX = this.value;
+    }
+    sel_num_2.addEventListener("change", change_sel_num_2)
+    function change_sel_num_2 () {
+      selY = this.value;
+    }
 
-    document.querySelector("#sel_num > option").style.backgroundColor = "aqua";
+    //X*Y를 버튼을 눌렀을 이벤트 발생
+    document.getElementsByTagName("input")[0].addEventListener("click", result)
+    function result() {
+      let value = selX * selY;
+      let result = document.querySelector("#result");
+      result.innerHTML = "<p>" + "계산 값 : " + value + "</p>"
+    }
+
   </script>
 </body>
 </html>
