@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>calculator</title>
+  <link rel="stylesheet" href="calculator.css">
 </head>
 <body>
   <div id="root">
@@ -15,8 +16,9 @@
     let num_value;
     let num_renderBox = [];
     let operator;
-    let x = [];
+    let x;
     let y;
+    let result_value;
     // ------------------------------------------------------
     
     // root에 wrap 3개 만들기
@@ -50,8 +52,6 @@
       let C_input = document.createElement("input");
       C_input.type = "button";
       C_input.value = i;
-      C_input.style.width = "50px"
-      C_input.style.height = "35px"
       let numPad = document.getElementById("numPad");
       numPad.appendChild(C_input);
     }
@@ -68,11 +68,9 @@
       num.children[0].innerHTML = Number(num_renderBox.join(""))
     }    
     // 연산기호 만들기
-    for (i=0; i<7; i++) {
+    for (i=0; i<6; i++) {
       let input = document.createElement("input");
       input.type = "button"
-      input.style.width = "50px";
-      input.style.height = "35px";
       input.addEventListener("click", operatorClick)
       let operator = document.getElementById("operator");
       operator.appendChild(input);
@@ -87,41 +85,63 @@
       } else if (i === 4) {
         input.value = "-";
       } else if (i === 5) {
-        input.value = "=";
-      } else if (i === 6) {
         input.value = "←";
       } else {}
     }
+    
+    // = 만들기
+    let input = document.createElement("input");
+      input.type = "button"
+      input.addEventListener("click", endOperate);
+      input.value = "=";
+      operator = document.getElementById("operator");
+      operator.appendChild(input);
+    
     // 연산기호 이벤트
     function operatorClick() {
-      operator = this.value;
-      if (operator === "C") {
-        if (num.children[0].innerHTML != 0) {
-          for (i=0; i<num_renderBox.length;) {
+      operator = this.value; // 누른 버튼을 연산자로 보내주기
+      if (operator === "C") { // C버튼
+        if (num.children[0].innerHTML != 0) { // 모니터가 0이 아닐때
+          for (i=0; i<num_renderBox.length;) { // 박스배열 내용물 비우기
             num_renderBox.pop()
           }
-          num.children[0].innerHTML = num_renderBox.length;
+          num.children[0].innerHTML = num_renderBox.length; // 0 띄우기
+          x = undefined; // x값 초기화
+        } else {
+          x = undefined; // 모니터가 0이면 그냥 x값만 초기화
         }
-      } else if (operator === "/") {
-        if (x.length === 0) {
-          x.push(Number(num.children[0].innerHTML));
-          // opertor = / -> 변수에 산술 연산자를 담는 방법을 찾아야 함
+      } else if (operator === "←") { // 지우개
+        num_renderBox.pop() // 마지막에 입력된 숫자만 지우기
+        num.children[0].innerHTML = Number(num_renderBox.join("")) // 모니터에 값 다시 띄우기
+      } else { // C버튼이나 지우개를 누른게 아니라면
+        if (x === undefined) { // C나 지우개를 누른게 아니고 x에 값이 없으면
+          x = Number(num_renderBox.join("")); // 모니터의 숫자를 x에 넣고
+          for (i=0; i < num_renderBox.length;) { // 모니터의 값을 0으로 초기화 하지만 숫자는 계속 남아있게
+            num_renderBox.pop();
+          }
+        } else {}
+      }
+    }
+    // = 이벤트
+    function endOperate () { // = 버튼이 눌렸을 때
+      if (x !== undefined) { // x에 값이 있다면
+        y = Number(num.children[0].innerHTML) // y에 모니터 숫자 대입
+        if (operator === "*") { // x에 값이 있고, 연산자가 이것 이라면,
+          result_value = x * y;
+        } else if (operator === "+") {
+          result_value = x + y;
+        } else if (operator === "-") {
+          result_value = x - y;
+        } else if (operator === "/") {
+          result_value = x / y;
         }
-      } else if (operator === "*") {
-      } else if (operator === "+") {
-      } else if (operator === "-") {
-      } else if (operator === "=") {
-        if (x.length > 0) {
-
-        }
-      } else if (operator === "←") {
-        num_renderBox.pop()
-        num.children[0].innerHTML = Number(num_renderBox.join(""))
       } else {}
+      return num.children[0].innerHTML = Number(result_value);
     }
 
     //test-------------------------
     /*
+    // 배열의 길이(숫자)를 모니터에 띄우기
     let Fake = [];
 
     // 숫자 클릭
