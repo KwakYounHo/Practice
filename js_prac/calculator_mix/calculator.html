@@ -16,6 +16,7 @@
     let num_value;
     let num_renderBox = [];
     let operator;
+    let next_operator
     let x;
     let y;
     let result_value;
@@ -89,54 +90,86 @@
       } else {}
     }
     
-    // = 만들기
+    // "=" 만들기
     let input = document.createElement("input");
-      input.type = "button"
-      input.addEventListener("click", endOperate);
-      input.value = "=";
-      operator = document.getElementById("operator");
-      operator.appendChild(input);
+    input.type = "button"
+    input.addEventListener("click", endOperate);
+    input.value = "=";
+    let endOperator = document.getElementById("operator");
+    endOperator.appendChild(input);
     
     // 연산기호 이벤트
     function operatorClick() {
-      operator = this.value; // 누른 버튼을 연산자로 보내주기
-      if (operator === "C") { // C버튼
-        if (num.children[0].innerHTML != 0) { // 모니터가 0이 아닐때
+      if (operator === undefined && next_operator === undefined) {
+        operator = this.value; // 누른 버튼을 연산자로 보내주기
+      } else if (next_operator === undefined) {
+        next_operator = this.value;
+      }
+      if (operator === "C" || next_operator === "C") { // C버튼
           for (i=0; i<num_renderBox.length;) { // 박스배열 내용물 비우기
             num_renderBox.pop()
           }
           num.children[0].innerHTML = num_renderBox.length; // 0 띄우기
-          x = undefined; // x값 초기화
-        } else {
-          x = undefined; // 모니터가 0이면 그냥 x값만 초기화
-        }
-      } else if (operator === "←") { // 지우개
-        num_renderBox.pop() // 마지막에 입력된 숫자만 지우기
-        num.children[0].innerHTML = Number(num_renderBox.join("")) // 모니터에 값 다시 띄우기
-      } else { // C버튼이나 지우개를 누른게 아니라면
+          x = undefined; // xy값 초기화
+          y = undefined; // xy값 초기화
+          result_value = undefined; // 결과 초기화
+          operator = undefined // 연산자 초기화
+          next_operator = undefined // 연산자 초기화
+      } else if (operator === "←" || next_operator === "←") { // 지우개
+        if (result_value === undefined) { // 지울때 result_value가 없으면
+          num_renderBox.pop() // 마지막에 입력된 숫자만 지우기
+          num.children[0].innerHTML = Number(num_renderBox.join("")) // 모니터에 값 다시 띄우기
+          next_operator = undefined;
+        } else {}
+      } else {
         if (x === undefined) { // C나 지우개를 누른게 아니고 x에 값이 없으면
-          x = Number(num_renderBox.join("")); // 모니터의 숫자를 x에 넣고
-          for (i=0; i < num_renderBox.length;) { // 모니터의 값을 0으로 초기화 하지만 숫자는 계속 남아있게
+        x = Number(num_renderBox.join("")); // 모니터의 숫자를 x에 넣고
+        for (i=0; i < num_renderBox.length;) { // 모니터의 값을 0으로 초기화 하지만 숫자는 계속 남아있게
+          num_renderBox.pop();
+        }
+        } else { // 눌렀는데 x에 값이 있어!
+          y = Number(num.children[0].innerHTML);
+          if (operator === "*") {
+            result_value = x * y;
+          } else if (operator === "+") {
+            result_value = x + y;
+          } else if (operator === "-") {
+            result_value = x - y;
+          } else if (operator === "/") {
+            result_value = x / y;
+          }
+          num.children[0].innerHTML = result_value;
+          for (i=0; i < num_renderBox.length;) {
             num_renderBox.pop();
           }
-        } else {}
+          operator = next_operator;
+          next_operator = undefined;
+          x = result_value;
+          y = undefined;
+        }
       }
     }
-    // = 이벤트
+    // "=" 이벤트
     function endOperate () { // = 버튼이 눌렸을 때
-      if (x !== undefined) { // x에 값이 있다면
+      if (x !== undefined && y === undefined) { // x에 값이 있고 y에 값이 없으면
         y = Number(num.children[0].innerHTML) // y에 모니터 숫자 대입
-        if (operator === "*") { // x에 값이 있고, 연산자가 이것 이라면,
-          result_value = x * y;
-        } else if (operator === "+") {
-          result_value = x + y;
-        } else if (operator === "-") {
-          result_value = x - y;
-        } else if (operator === "/") {
-          result_value = x / y;
-        }
-      } else {}
+      } else if (x !== undefined && y !== undefined) { //x,y에 값이 있으면
+        x = Number(result_value);
+      }
+      if (operator === "*") {
+        result_value = x * y;
+      } else if (operator === "+") {
+        result_value = x + y;
+      } else if (operator === "-") {
+        result_value = x - y;
+      } else if (operator === "/") {
+        result_value = x / y;
+      }
       return num.children[0].innerHTML = Number(result_value);
+      for (i=0; i < num_renderBox.length;) {
+        num_renderBox.pop();
+      }
+      x = result_value;
     }
 
     //test-------------------------
