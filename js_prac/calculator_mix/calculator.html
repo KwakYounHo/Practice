@@ -13,8 +13,10 @@
     // 전역 변수 설정-----------------------------------------
     let root = document.getElementById("root");
     let num_value;
-    let num_lander = [];
+    let num_renderBox = [];
     let operator;
+    let x = [];
+    let y;
     // ------------------------------------------------------
     
     // root에 wrap 3개 만들기
@@ -59,14 +61,12 @@
       let numPad = document.getElementById("numPad");
       numPad.children[i].addEventListener("click", numPadClick);
     }
-    // numPad 이벤트
+    // numPad 이벤트 - renderBox에 숫자 표기
     function numPadClick() {
-      num_value = this.value;
-      num_lander.push(num_value);
-      for (i=0; i<num_lander.length; i++)
-      num.children[0].innerHTML = num_lander;
-    }
-    
+      num_value = Number(this.value);
+      num_renderBox.push(num_value);
+      num.children[0].innerHTML = Number(num_renderBox.join(""))
+    }    
     // 연산기호 만들기
     for (i=0; i<7; i++) {
       let input = document.createElement("input");
@@ -88,24 +88,37 @@
         input.value = "-";
       } else if (i === 5) {
         input.value = "=";
-      } else {
+      } else if (i === 6) {
         input.value = "←";
-      }
+      } else {}
     }
     // 연산기호 이벤트
     function operatorClick() {
       operator = this.value;
       if (operator === "C") {
-        for (i=0; i<num_lander.length;) {
-          num_lander.pop();
-          num.children[0].innerHTML = num_lander;
+        if (num.children[0].innerHTML != 0) {
+          for (i=0; i<num_renderBox.length;) {
+            num_renderBox.pop()
+          }
+          num.children[0].innerHTML = num_renderBox.length;
         }
-      } else {};
-      if (num.children[0].innerHTML === "") {
-        num.children[0].innerHTML = 0;
-      }
-    }
+      } else if (operator === "/") {
+        if (x.length === 0) {
+          x.push(Number(num.children[0].innerHTML));
+          // opertor = / -> 변수에 산술 연산자를 담는 방법을 찾아야 함
+        }
+      } else if (operator === "*") {
+      } else if (operator === "+") {
+      } else if (operator === "-") {
+      } else if (operator === "=") {
+        if (x.length > 0) {
 
+        }
+      } else if (operator === "←") {
+        num_renderBox.pop()
+        num.children[0].innerHTML = Number(num_renderBox.join(""))
+      } else {}
+    }
 
     //test-------------------------
     /*
