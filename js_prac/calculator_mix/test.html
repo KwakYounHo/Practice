@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // set variable--------------------------------------
+    let numBox = [];
+    let operator;
+    let subOperator;
+    let x;
+    let y;
+    // --------------------------------------------------
+
+
+    // create wrapper------------------------------------
+    for (i=0; i<3; i++) {
+      let div = document.createElement("div");
+      if (i===0) {
+        div.id = "numBox";
+      } else if (i===1) {
+        div.id = "numPad";
+      } else {
+        div.id = "operator";
+      }
+      document.getElementById("root").appendChild(div);
+    }
+    // --------------------------------------------------
+
+
+    // numBox -------------------------------------------
+    let C_p = document.createElement("p");
+    C_p.id = "numRender";
+    document.getElementById("numBox").appendChild(C_p);
+    // --------------------------------------------------
+
+
+    // numPad -------------------------------------------
+    for (i=0; i<10; i++) {
+      let input = document.createElement("input");
+      input.type = "button";
+      input.value = i;
+      input.addEventListener("click", numPadClick)
+      document.getElementById("numPad").appendChild(input);
+    }
+    // --------------------------------------------------
+    
+    
+    // numPadClick---------------------------------------
+    function numPadClick() {
+      numBox.push(Number(this.value));
+      document.getElementById("numRender").innerText = Number(numBox.join(""));
+    }
+    // --------------------------------------------------
+    
+    
+    // operator -----------------------------------------
+    for (i=0; i<6; i++) {
+      let input = document.createElement("input");
+      input.type = "button";
+      if (i===0) {
+        input.value = "+";
+      } else if (i===1) {
+        input.value = "-";
+      } else if (i===2) {
+        input.value = "*";
+      } else if (i===3) {
+        input.value = "/";
+      } else if (i===4) {
+        input.value = "C";
+      } else if (i===5) {
+        input.value = "←";
+      }
+      input.addEventListener("click", operatorClick)
+      document.getElementById("numPad").appendChild(input);
+    }
+    // --------------------------------------------------
+    
+    
+    // operator Event -----------------------------------
+    function operatorClick() {
+      
+      // 밸류 입히기
+      if (x === undefined && y === undefined && operator === undefined) { // x, y, operator의 값이 없을 때
+        operator = this.value;
+      } 
+
+      if (operator === "C") {
+        x = undefined;
+        y = undefined;
+        document.getElementById("numRender").innerTEXT = 0;
+      }
+    }
+    // --------------------------------------------------
+  </script>
+</body>
+</html>
