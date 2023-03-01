@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calculrator</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const YH = {
+      renderNumBox : [],
+      createElement : function (tagName,target) {
+        const element = document.createElement(tagName);
+        target.appendChild(element);
+      },
+      operate : function (operator) {
+        if (operator === '+') {
+          result = x + y;
+          operator = undefined;
+          for(i=0; this.renderNumBox.length;) {
+            this.renderNumBox.pop();
+          }
+          return Number(result)
+        } else if (operator === '-') {
+          result = x - y;
+          operator = undefined;
+          for(i=0; this.renderNumBox.length;) {
+            this.renderNumBox.pop();
+          }
+          return Number(result)
+        } else if (operator === '*') {
+          result = x * y;
+          operator = undefined;
+          for(i=0; this.renderNumBox.length;) {
+            this.renderNumBox.pop();
+          }
+          return Number(result)
+        } else if (operator === '/') {
+          result = x / y;
+          operator = undefined;
+          for(i=0; this.renderNumBox.length;) {
+            this.renderNumBox.pop();
+          }
+          return Number(result)
+        }
+      }
+    }
+    
+  const root = document.getElementById('root');
+  
+  // operate variable
+  let nowOperator;
+  let x;
+  let y;
+    let result;
+    
+    /*------------wrapper--------------*/
+    for (i = 0; i < 3; i++) {
+      YH.createElement('div',root);
+      if (i === 0) {
+        root.children[i].id = 'numBox';
+      } else if (i === 1) {
+        root.children[i].id = 'numPad';
+      } else {
+        root.children[i].id = 'operator';
+      }
+    }
+    // ----------------------------------
+    
+    
+    /*-----------numBox------------*/
+    const numBox = document.getElementById('numBox');
+    YH.createElement('p',numBox);
+    const P_Num = numBox.children[0]
+    P_Num.innerText = Number(YH.renderNumBox.join(""));
+    // ------------------------------
+    
+    
+    /*-------------numPad-------------*/
+    const numPad = document.getElementById('numPad');
+    
+    // create numPad
+    for (i=0; i<10; i++) {
+      YH.createElement('input',numPad)
+      numPad.children[i].setAttribute('type','button')
+      numPad.children[i].value = i
+      numPad.children[i].addEventListener('click', numPadClick)
+    }
+    
+    // numPad Click
+    function numPadClick() {
+      YH.renderNumBox.push(this.value);
+      P_Num.innerText = Number(YH.renderNumBox.join(""));
+    }
+    // ---------------------------------
+    
+    
+    /*-------------operator---------------*/
+    const operator = document.getElementById('operator');
+    
+    // create operator
+    for (i=0; i<7; i++) {
+      YH.createElement('input',operator);
+      operator.children[i].setAttribute('type','button');
+      if (i===0) {
+        operator.children[i].setAttribute('value','←');
+      } else if (i===1) {
+        operator.children[i].setAttribute('value','C');
+      } else if (i===2) {
+        operator.children[i].setAttribute('value','+');
+      } else if (i===3) {
+        operator.children[i].setAttribute('value','-');
+      } else if (i===4) {
+        operator.children[i].setAttribute('value','*');
+      } else if (i===5) {
+        operator.children[i].setAttribute('value','/');
+      } else if (i===6) {
+        operator.children[i].setAttribute('value','=');
+      }
+      operator.children[i].addEventListener('click',operatorClick)
+    }
+
+    // operator Click
+    function operatorClick() {
+      if (this.value !== '=') {
+        if (nowOperator === undefined) {        //  no operator
+          nowOperator = this.value;
+          x = Number(P_Num.innerText)
+          for (i=0; i<YH.renderNumBox.length;) {
+            YH.renderNumBox.pop()
+          }
+        } else if (YH.renderNumBox.length<=0) {       //  yes operator / box = null
+          nowOperator = this.value;
+        } else if (YH.renderNumBox.length>0) {        //  yes operator / box = anything
+          y = Number(P_Num.innerText);
+          YH.operate(nowOperator);
+          x = Number(result);
+          P_Num.innerText = result;
+          result = undefined;
+          nowOperator = this.value;
+        }
+        
+  
+  
+        // operator event
+        if (nowOperator === 'C') {
+          x = undefined;
+          y = undefined;
+          nowOperator = undefined;
+          result = undefined;
+          for (i=0; i<YH.renderNumBox.length;) {
+            YH.renderNumBox.pop();
+          }
+          P_Num.innerText = Number(YH.renderNumBox.join(""));
+        } else if (nowOperator === '←') {
+          YH.renderNumBox.pop();
+          P_Num.innerText = Number(YH.renderNumBox.join(""));
+          nowOperator = undefined;
+        } 
+        // click '='
+      } else {
+        if (result === undefined && y === undefined) {
+          y = Number(P_Num.innerText)
+          YH.operate(nowOperator);
+          P_Num.innerText = Number(result);
+        } else {
+          x = result;
+          YH.operate(nowOperator);
+          P_Num.innerText = result;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
